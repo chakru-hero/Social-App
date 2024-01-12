@@ -14,7 +14,7 @@ export async function DELETE(
     const serverId = searchParams.get("serverId");
 
     if (!profile) {
-      return new NextResponse("Unauthorized" ,{ status: 401 });
+      return new NextResponse("Unauthorized", { status: 401 });
     }
 
     if (!serverId) {
@@ -28,9 +28,7 @@ export async function DELETE(
     const server = await db.server.update({
       where: {
         id: serverId,
-        profileId: profile.id,//BUG : moderators are not updable to update members because of this line.
-        // Expl : Since profileId in Server table is the Admin's profileId and profile.id is the current member's profileId,
-        // Prisma cannot find a server since when a moderator hits this API , they are not in the profileId for the server but the admin's profileId is present.
+        profileId: profile.id,
       },
       data: {
         members: {
@@ -87,9 +85,7 @@ export async function PATCH(
     const server = await db.server.update({
       where: {
         id: serverId,
-        profileId: profile.id, //BUG : moderators are not updable to update members because of this line.
-        // Expl : Since profileId in Server table is the Admin's profileId and profile.id is the current member's profileId,
-        // Prisma cannot find a server since when a moderator hits this API , they are not in the profileId for the server but the admin's profileId is present.
+        profileId: profile.id, 
       },
       data: {
         members: {
